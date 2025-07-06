@@ -1,103 +1,140 @@
-import Image from "next/image";
+'use client'
+import { useState, useEffect, useRef } from "react"
+
+import { Typography, Box, Avatar, Badge, Button } from '@mui/material';
+import { ChevronRight } from '@mui/icons-material';
+import Link from 'next/link';
+
+//Context
+import { useScroll } from "@/context/SectionContext";
+
+// Components
+import ProjectCards from "@/components/ProjectCards";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  const [sendingMessage, setSendingMessage] = useState(false);
+  const [contactName, setContactName] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
+  const [contactMessage, setContactMessage] = useState("");
+
+  const { aboutRef, projectsRef, contactRef, scrollToSection } = useScroll();
+
+  const skills: string[] = [
+    "JavaScript",
+    "TypeScript",
+    "React",
+    "Next.js",
+    "HTML",
+    "CSS",
+    "Tailwind CSS",
+    "Material UI",
+    "Git",
+    "GitHub",
+    "Responsive Design",
+    "RESTful APIs",
+    "Node.js",
+    "Express.js",
+  ]
+
+  const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Here you would typically handle the form submission, e.g., sending an email
+    setSendingMessage(true);
+    // Simulate a network request
+    setTimeout(() => {
+      setSendingMessage(false);
+      alert("Message sent!");
+    }, 2000);
+  };
+  return (
+    <main className="pt-20 container mx-auto max-w-[1200px] flex flex-col items-center gap-5">
+      {/* ABOUT */}
+      <section ref={aboutRef}>
+        <Box className="flex items-center justify-between text-left p-6 gap-3">
+          <Box className="space-y-3">
+            <Badge className="inline-block mb-4 bg-white text-[#0A192F] text-[14px] rounded-2xl px-2 font-black">Frontend Developer</Badge>
+            <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">
+              Welcome to My Portfolio
+            </h1>
+            <p className="max-w-[600px] text-gray-500 md:text-xl dark:text-gray-400">
+              I am a passionate Frontend Developer with a love for creating beautiful and functional web
+              applications.
+            </p>
+            <Box className="flex gap-4">
+              <Button onClick={() => scrollToSection(projectsRef)} variant="contained" sx={{transform: 'none', backgroundColor: 'white',  border: '1px solid #fff', color: '#0A192F', '&:hover': { backgroundColor: '#0A192F', color: '#fff', cursor: 'pointer'} }} endIcon={<ChevronRight></ChevronRight>}>My Projects</Button>
+              <Button onClick ={() => scrollToSection(contactRef)} variant="outlined" sx={{transform: 'none', color: '#fff', borderColor: '#fff' }}>Contact Me</Button>
+            </Box>
+          </Box>
+          <Link href="https://github.com/GustavoRocha3" target="_blank" rel="noopener noreferrer">
+            <Avatar
+              sx={{ width: 350, height: 350 }}
+              className="inline-block rounded-full ring-2 ring-white shadow-[0_0_15px_rgba(255,255,255,0.8)]"
+              src="/profile-image.png"
+              alt="Gustavo Rocha"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          </Link>
+        </Box>
+        <Box className="flex items-center gap-6 justify-center flex-col p-6 overflow-hidden">
+          <Typography variant="h4" className="text-4xl font-bold text-center mt-10">
+            About Me
+          </Typography>
+          <Box className="flex justify-between gap-10 w-full">
+            <Box className="">
+              <Typography variant="h5" className="text-black pb-4 text-2xl font-black dark:text-white">
+                My Journey
+              </Typography>
+              <Typography className="text-base max-w-xl text-gray-500 md:text-xl dark:text-gray-400">
+                Hello! I'm <strong>Gustavo</strong>, and I started my journey as a <strong>Frontend Developer</strong> in 2022 at Sinergytech, where I had the opportunity to improve the skills I had learned at Digital House.
+                <br />
+                Right now I'm working in a project that uses Next.js, Typescript and some libs like Material UI
+              </Typography>
+            </Box>
+            <Box>
+              <Typography variant="h5" className="text-black pb-4 text-2xl font-black dark:text-white">
+                My Skills
+              </Typography>
+              <Box className="text-base max-w-xl text-gray-500 md:text-xl dark:text-gray-400 space-x-1.5">
+                {skills.map((skill,index) => {
+                  return( 
+                    <Badge key={index} className="inline-block mb-2 bg-[#c8c8c8] text-[#0A192F] text-[14px] rounded-2xl px-2 font-bold cursor-default transition-shadow hover:shadow-[0_0_10px_4px_rgba(30,58,138,0.8)] hover:bg-white">{skill}</Badge>
+                  )
+                })}
+              </Box>
+            </Box>            
+          </Box>
+        </Box>
+      </section>
+      {/* PROJECTS */}
+      <section ref={projectsRef} className="flex flex-col items-center gap-5">
+        <Typography variant="h4" className="text-4xl font-bold text-center mt-10">
+          Projects
+        </Typography>
+        <Typography className="text-base w-full text-gray-500 md:text-xl dark:text-gray-400 text-center mb-10">
+          Here are some of the projects I've worked on. Click on the button bellow to view the code on GitHub.
+        </Typography>
+        <ProjectCards />
+      </section>
+      {/* CONTACT */}
+      <section className="flex flex-col items-center gap-5" ref={contactRef}>
+        <Typography variant="h4" className="text-4xl font-bold text-center mt-10">
+          Contact Me
+        </Typography>
+        <Typography className="text-base w-full text-gray-500 md:text-xl dark:text-gray-400 text-center mb-10">
+          If you would like to get in touch, feel free to reach out via email or connect with me on LinkedIn.
+        </Typography>
+        <Box className="flex flex-col items-center gap-4 w-full">
+          <form onSubmit={sendEmail} className="flex flex-col gap-4 w-full">
+              <input onChange={(e) => setContactName(e.target.value)} type="text" name="name" placeholder="Your Name*" required className="p-2 border rounded" />
+              <input onChange={(e) => setContactEmail(e.target.value)} type="email" name="email" placeholder="Your Email*" required className="p-2 border rounded" />
+              <textarea onChange={(e) => setContactMessage(e.target.value)} name="message" placeholder="Your Message*" required className="p-2 border rounded h-32" />
+              <Button loading={sendingMessage} loadingPosition="end" onClick={() => sendEmail} variant="contained" type="submit" sx={{transform: 'none', backgroundColor: 'white',  border: '1px solid #fff', color: '#0A192F', '&:hover': { backgroundColor: '#0A192F', color: '#fff', cursor: 'pointer'} }}>
+                  Send Message
+              </Button>
+          </form>
+        </Box>
+      </section>
+      
+    </main>
   );
 }
