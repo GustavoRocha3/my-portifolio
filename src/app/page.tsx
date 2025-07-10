@@ -50,8 +50,8 @@ export default function Home() {
   return (
     <main className="pt-20 container mx-auto max-w-[1200px] flex flex-col items-center gap-5">
       {/* ABOUT */}
-      <section ref={aboutRef}>
-        <Box className="flex items-center justify-between text-left p-6 gap-3">
+      <section ref={aboutRef} className="sm:py-10 md:py-12 lg:py-16 mx-7 flex flex-col items-center gap-5 bg-[#0A192F] text-white">
+        <Box className="flex items-center justify-between text-left p-6 gap-3 sm:flex-row md:flex-row lg:flex-row flex-col-reverse">
           <Box className="space-y-3">
             <Badge className="inline-block mb-4 bg-white text-[#0A192F] text-[14px] rounded-2xl px-2 font-black">Frontend Developer</Badge>
             <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">
@@ -79,7 +79,7 @@ export default function Home() {
           <Typography variant="h4" className="text-4xl font-bold text-center mt-10">
             About Me
           </Typography>
-          <Box className="flex justify-between gap-10 w-full">
+          <Box className="flex justify-between gap-10 w-full flex-col sm:flex-row md:flex-row lg:flex-row">
             <Box className="">
               <Typography variant="h5" className="text-black pb-4 text-2xl font-black dark:text-white">
                 My Journey
@@ -106,7 +106,7 @@ export default function Home() {
         </Box>
       </section>
       {/* PROJECTS */}
-      <section ref={projectsRef} className="flex flex-col items-center gap-5">
+      <section ref={projectsRef} className="sm:py-10 md:py-12 lg:py-16 mx-7 flex flex-col items-center gap-5  bg-[#0A192F] text-white">
         <Typography variant="h4" className="text-4xl font-bold text-center mt-10">
           Projects
         </Typography>
@@ -116,7 +116,7 @@ export default function Home() {
         <ProjectCards />
       </section>
       {/* CONTACT */}
-      <section className="flex flex-col items-center gap-5" ref={contactRef}>
+      <section ref={contactRef} className="sm:py-10 md:py-12 lg:py-16 mx-7 flex flex-col items-center gap-5  bg-[#0A192F] text-white">
         <Typography variant="h4" className="text-4xl font-bold text-center mt-10">
           Contact Me
         </Typography>

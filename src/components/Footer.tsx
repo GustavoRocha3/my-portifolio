@@ -13,9 +13,9 @@ export default function Footer() {
           <Link href="https://github.com/GustavoRocha3" target="_blank" rel="noopener noreferrer">
             <GitHub />
           </Link>
-            <Link href="https://www.linkedin.com/in/gustavo-de-alencar-b-rocha/" target="_blank" rel="noopener noreferrer">
-                <LinkedIn />
-            </Link>
+          <Link href="https://www.linkedin.com/in/gustavo-de-alencar-b-rocha/" target="_blank" rel="noopener noreferrer">
+              <LinkedIn />
+          </Link>
         </Box>
       </Box>
     </footer>
