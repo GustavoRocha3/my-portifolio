@@ -1,17 +1,39 @@
 'use client';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Typewriter } from "react-simple-typewriter";
 import { useScroll } from "@/context/SectionContext";
 import { Menu as MenuIcon, Close as CloseIcon } from "@mui/icons-material";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function Header() {
   const { aboutRef, projectsRef, contactRef, scrollToSection } = useScroll();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const handleScrollAndClose = (ref: React.RefObject<HTMLDivElement | null>) => {
-    scrollToSection(ref);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const handleNavigateToSection = (ref: React.RefObject<HTMLDivElement | null>) => {
+    if (pathname !== '/') {
+      // Salva o ID da seção e volta para a home
+      sessionStorage.setItem("scrollTo", ref.current?.id ?? "");
+      router.push('/');
+    } else {
+      scrollToSection(ref);
+    }
     setMenuOpen(false);
   };
+
+  useEffect(() => {
+    const sectionId = sessionStorage.getItem("scrollTo");
+    if (sectionId && pathname === '/') {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      sessionStorage.removeItem("scrollTo");
+    }
+  }, [pathname]);
 
   return (
     <header className="bg-[#112240] text-[#CCD6F6] p-4 fixed w-full z-10 shadow-lg">
@@ -28,16 +50,33 @@ export default function Header() {
           />
         </h1>
 
-        {/* Menu normal (desktop) */}
+        {/* Desktop menu */}
         <nav className="hidden md:block">
           <ul className="flex space-x-6">
-            <li><a onClick={() => scrollToSection(aboutRef)} className="hover:underline cursor-pointer">About</a></li>
-            <li><a onClick={() => scrollToSection(projectsRef)} className="hover:underline cursor-pointer">Projects</a></li>
-            <li><a onClick={() => scrollToSection(contactRef)} className="hover:underline cursor-pointer">Contact</a></li>
+            <li>
+              <button onClick={() => handleNavigateToSection(aboutRef)} className="hover:underline cursor-pointer bg-transparent border-none text-inherit">
+                About
+              </button>
+            </li>
+            <li>
+              <button onClick={() => handleNavigateToSection(projectsRef)} className="hover:underline cursor-pointer bg-transparent border-none text-inherit">
+                Projects
+              </button>
+            </li>
+            {/* <li>
+              <Link href="/features" className="hover:underline cursor-pointer">
+                Features
+              </Link>
+            </li> */}
+            <li>
+              <button onClick={() => handleNavigateToSection(contactRef)} className="hover:underline cursor-pointer bg-transparent border-none text-inherit">
+                Contact
+              </button>
+            </li>
           </ul>
         </nav>
 
-        {/* Ícone Hamburguer (mobile) */}
+        {/* Mobile menu toggle */}
         <div className="md:hidden">
           <button onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? <CloseIcon /> : <MenuIcon />}
@@ -45,13 +84,30 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Menu Mobile */}
+      {/* Mobile menu */}
       {menuOpen && (
         <div className="md:hidden mt-2 bg-[#0a192f] px-4 py-4 shadow-md">
           <ul className="flex flex-col space-y-3 text-lg">
-            <li><a onClick={() => handleScrollAndClose(aboutRef)} className="hover:underline cursor-pointer">About</a></li>
-            <li><a onClick={() => handleScrollAndClose(projectsRef)} className="hover:underline cursor-pointer">Projects</a></li>
-            <li><a onClick={() => handleScrollAndClose(contactRef)} className="hover:underline cursor-pointer">Contact</a></li>
+            <li>
+              <button onClick={() => handleNavigateToSection(aboutRef)} className="hover:underline cursor-pointer bg-transparent border-none text-inherit">
+                About
+              </button>
+            </li>
+            <li>
+              <button onClick={() => handleNavigateToSection(projectsRef)} className="hover:underline cursor-pointer bg-transparent border-none text-inherit">
+                Projects
+              </button>
+            </li>
+            {/* <li>
+              <Link href="/features" className="hover:underline cursor-pointer" onClick={() => setMenuOpen(false)}>
+                Features
+              </Link>
+            </li> */}
+            <li>
+              <button onClick={() => handleNavigateToSection(contactRef)} className="hover:underline cursor-pointer bg-transparent border-none text-inherit">
+                Contact
+              </button>
+            </li>
           </ul>
         </div>
       )}

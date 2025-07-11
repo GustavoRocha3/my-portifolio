@@ -51,7 +51,7 @@ export default function Home() {
     <main className="pt-20 container mx-auto max-w-[1200px] flex flex-col items-center gap-5">
       {/* ABOUT */}
       <section ref={aboutRef} className="sm:py-10 md:py-12 lg:py-16 mx-7 flex flex-col items-center gap-5 bg-[#0A192F] text-white">
-        <Box className="flex items-center justify-between text-left p-6 gap-3 sm:flex-row md:flex-row lg:flex-row flex-col-reverse">
+        <Box className="flex items-center justify-between text-left p-6 gap-3 sm:flex-row md:flex-row lg:flex-row flex-col-reverse w-full">
           <Box className="space-y-3">
             <Badge className="inline-block mb-4 bg-white text-[#0A192F] text-[14px] rounded-2xl px-2 font-black">Frontend Developer</Badge>
             <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">
